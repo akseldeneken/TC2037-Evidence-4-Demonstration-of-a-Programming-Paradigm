@@ -106,31 +106,31 @@ Expectation:
 - Message appears: "Insufficient storage space to upload file: X"
  -The slot is correctly freed for other threads, if present.
 
-## Análisis de complejidad y comparación con otros paradigmas
+## Complexity Analysis and Comparison with Other Paradigms
 
-### Complejidad temporal
+### Time Complexity
 
-La complejidad del programa depende del número de archivos n que se quieran subir y del tiempo de subida de cada uno. Como cada archivo se ejecuta en su propio hilo y cada subida se simula con sleep, la complejidad por archivo es O(t), donde t es el número de ciclos necesarios para subir el archivo (relacionado con su tamaño y velocidad).
+The program's complexity depends on the number of files n to be uploaded and the upload time for each one. Since each file runs in its own thread and each upload is simulated with sleep, the complexity per file is O(t), where t is the number of cycles required to upload the file (related to its size and speed).
 
-La complejidad total sería aproximadamente **O(n·t)**, pero no de forma secuencial, ya que la concurrencia permite que varios archivos se suban al mismo tiempo. Gracias al semáforo, el tiempo total se reduce a aproximadamente O((n / slots) · t), donde slots es el número de hilos que pueden ejecutarse a la vez.
+The total complexity would be approximately **O(n t)**, but not sequentially, since concurrency allows multiple files to be uploaded at the same time. Thanks to the semaphore, the total time is reduced to approximately O((n / slots) t), where slots is the number of threads that can run at the same time.
 
-### Alternativa: programación secuencial
+### Alternative: Sequential Programming
 
-Una forma alternativa de resolver este problema habría sido con programación **secuencial**: subir un archivo, esperar a que termine, y luego pasar al siguiente. Esto sería mucho más simple de implementar, pero con un costo claro:
+An alternative way to solve this problem would have been with **sequential** programming: upload a file, wait for it to finish, and then move on to the next. This would be much simpler to implement, but with a clear cost:
 
-- La ejecución sería estrictamente lineal.
-- El tiempo total crecería linealmente con el número de archivos.
-- No habría interacción entre procesos ni simulación realista.
+- Execution would be strictly linear.
+- The total time would grow linearly with the number of files.
+- There would be no interaction between processes or realistic simulation.
 
-### Alternativa más compleja: paralelismo real
+### More complex alternative: true parallelism
 
-Otra opción más avanzada sería usar **paralelismo**, por ejemplo con OpenMP o GPU (CUDA), para dividir cada archivo en fragmentos y subir esos fragmentos en paralelo. Sin embargo, esto sería excesivo para este problema, ya que cada archivo aquí es tratado como una unidad.
+Another more advanced option would be to use **parallelism**, for example with OpenMP or GPU (CUDA), to divide each file into fragments and upload those fragments in parallel. However, this would be excessive for this problem, since each file is treated as a single unit.
 
-### Concurrencia: balance ideal
+### Concurrency: ideal balance
 
-La programación concurrente fue ideal para este proyecto porque:
+Concurrent programming was ideal for this project because:
 
-- Simula cargas reales donde múltiples tareas ocurren al mismo tiempo.
-- Se puede controlar cuántas tareas están activas con semáforos (slots).
-- Permite aprovechar el tiempo del CPU sin bloquear el resto del sistema.
-- Refleja la lógica realista de servidores y apps de carga de archivos.
+- It simulates real-world workloads where multiple tasks occur simultaneously.
+- The number of active tasks can be controlled with semaphores (slots).
+- It allows you to take advantage of CPU time without blocking the rest of the system.
+- It reflects the realistic logic of file upload servers and apps.
