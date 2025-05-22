@@ -97,10 +97,9 @@ Observations:
 
 ## Test 3: Simulating insufficient memory from the start
 Change: ```availableMemory = 100```
-File: ```File("HugeFile", 300, 0, 50);```
 
 Expectation:
 
 - The file upload does not occur.
-- Message appears: "Insufficient storage space to upload file: HugeFile"
+- Message appears: "Insufficient storage space to upload file: X"
  -The slot is correctly freed for other threads, if present.
