@@ -24,3 +24,20 @@ In this way, the program reflects a realistic concurrent system, where several p
 The diagram included in the evidence graphically represents this structure. It shows how multiple threads, each associated with a file, share the same memory space and I/O. Before executing the upload, all threads must go through a wait condition (cv.wait) that acts as an access filter, determined by the number of available slots.
 
 Once a thread gains access, it simulates the upload process and, upon completion, releases the slot and notifies the next thread. This flow is reflected in the visual cycle diagram, where threads enter the concurrent process in a controlled manner, demonstrating how synchronization and resource management are implemented in a realistic concurrency environment.
+
+## Implementation
+The project was developed in C++ using the following standard libraries:
+
+- #include <iostream> for input and output handling
+
+- #include <thread> for creating multiple threads
+
+- #include <mutex> for protecting shared resources
+
+- #include <condition_variable> for implementing semaphore synchronization
+
+- #include <chrono> for simulating wait times during file uploads
+
+The main structure revolves around a class called File, which represents a file to be uploaded. Each File object contains its attributes (name, size, upload speed, etc.) and an operator() function that executes when the object is called from a thread. The function performs semaphore wait logic, memory verification, upload simulation with a progress bar, and resource release upon completion.
+
+A key snippet of semaphore synchronization is as follows:
