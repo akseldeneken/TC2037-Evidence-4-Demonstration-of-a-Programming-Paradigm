@@ -60,7 +60,7 @@ This mechanism represents a semaphore-based concurrency control, ensuring that o
 ## Tests
 Several tests were performed to verify the program's concurrent behavior and validate the correct use of semaphores, memory, and synchronization between threads.
 
-Test 1: Uploading 5 files with different sizes and speeds
+### Test 1: Uploading 5 files with different sizes and speeds
 ```
  thread t1(File("Word Document", 100, 0, 10));
     thread t2(File("Big Photo", 300, 0, 30));
@@ -86,3 +86,30 @@ Observations:
 - There were no console conflicts thanks to the use of mutexes.
 
 - Memory was managed correctly, and files were uploaded until it ran out.
+
+### Test 2: Changing the concurrency limit to 3
+
+**Change:** `slots = 2` has been changed to `slots = 3`.
+
+**Expectation:**
+- Up to 3 files can be uploaded at the same time.
+- Increased concurrency is observed in the output.
+- The remaining threads wait their turn when there are already 3 active threads.
+- Confirms that the semaphore adapts correctly to different limits.
+
+**Expected result:**
+- Three progress bars interleaved at the same time.
+- Uploads complete faster compared to `slots = 2`.
+- Memory is still respected and resources are freed upon completion.
+
+## Test 3: Simulating insufficient memory from the start
+Change: ```availableMemory = 100```
+File: ```File("HugeFile", 300, 0, 50);```
+
+Expectation:
+
+The file upload does not occur.
+
+Message appears: "Insufficient storage space to upload file: HugeFile"
+
+The slot is correctly freed for other threads, if present.
