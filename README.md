@@ -103,3 +103,32 @@ Expectation:
 - The file upload does not occur.
 - Message appears: "Insufficient storage space to upload file: X"
  -The slot is correctly freed for other threads, if present.
+
+## Análisis de complejidad y comparación con otros paradigmas
+
+### Complejidad temporal
+
+La complejidad del programa depende del número de archivos n que se quieran subir y del tiempo de subida de cada uno. Como cada archivo se ejecuta en su propio hilo y cada subida se simula con sleep, la complejidad por archivo es O(t), donde t es el número de ciclos necesarios para subir el archivo (relacionado con su tamaño y velocidad).
+
+La complejidad total sería aproximadamente **O(n·t)**, pero no de forma secuencial, ya que la concurrencia permite que varios archivos se suban al mismo tiempo. Gracias al semáforo, el tiempo total se reduce a aproximadamente O((n / slots) · t), donde slots es el número de hilos que pueden ejecutarse a la vez.
+
+### Alternativa: programación secuencial
+
+Una forma alternativa de resolver este problema habría sido con programación **secuencial**: subir un archivo, esperar a que termine, y luego pasar al siguiente. Esto sería mucho más simple de implementar, pero con un costo claro:
+
+- La ejecución sería estrictamente lineal.
+- El tiempo total crecería linealmente con el número de archivos.
+- No habría interacción entre procesos ni simulación realista.
+
+### Alternativa más compleja: paralelismo real
+
+Otra opción más avanzada sería usar **paralelismo**, por ejemplo con OpenMP o GPU (CUDA), para dividir cada archivo en fragmentos y subir esos fragmentos en paralelo. Sin embargo, esto sería excesivo para este problema, ya que cada archivo aquí es tratado como una unidad.
+
+### Concurrencia: balance ideal
+
+La programación concurrente fue ideal para este proyecto porque:
+
+- Simula cargas reales donde múltiples tareas ocurren al mismo tiempo.
+- Se puede controlar cuántas tareas están activas con semáforos (slots).
+- Permite aprovechar el tiempo del CPU sin bloquear el resto del sistema.
+- Refleja la lógica realista de servidores y apps de carga de archivos.
