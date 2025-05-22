@@ -38,6 +38,8 @@ The project was developed in C++ using the following standard libraries:
 
 - #include <chrono> for simulating wait times during file uploads
 
+Although the standard libraries <thread>, <mutex>, and <condition_variable> were used, they do not solve the problem logic on their own. They only provide the basic tools for implementing concurrency, but all the semaphore logic, memory control, synchronization between threads, and execution flow was designed and implemented manually. No external libraries were used to abstract or automate the desired behavior.
+
 The main structure revolves around a class called File, which represents a file to be uploaded. Each File object contains its attributes (name, size, upload speed, etc.) and an operator() function that executes when the object is called from a thread. The function performs semaphore wait logic, memory verification, upload simulation with a progress bar, and resource release upon completion.
 
 A key snippet of semaphore synchronization is as follows:
