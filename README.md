@@ -56,6 +56,8 @@ cv.notify_one();
 
 ```
 This mechanism represents a semaphore-based concurrency control, ensuring that only a limited number of threads can upload files at the same time. The use of additional mutexes protects resources such as available memory and prevents race conditions.
+
+## Tests
 Several tests were performed to verify the program's concurrent behavior and validate the correct use of semaphores, memory, and synchronization between threads.
 
 Test 1: Uploading 5 files with different sizes and speeds
