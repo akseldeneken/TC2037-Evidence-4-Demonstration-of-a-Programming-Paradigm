@@ -69,22 +69,15 @@ Several tests were performed to verify the program's concurrent behavior and val
     thread t5(File("Homework", 100, 0, 20));
 ```
 Expected results:
-
 - Only two files are uploaded at a time (via slots).
-
 - The progress bar advances correctly in each thread.
-
 - If there is not enough memory, the program displays the message:
 "Insufficient storage space to upload file: Video."
-
 - At the end, the remaining memory and details of each uploaded file are displayed.
 
 Observations:
-
 - Concurrency is clearly reflected in the interleaved output of the uploaded files.
-
 - There were no console conflicts thanks to the use of mutexes.
-
 - Memory was managed correctly, and files were uploaded until it ran out.
 
 ### Test 2: Changing the concurrency limit to 3
@@ -108,8 +101,6 @@ File: ```File("HugeFile", 300, 0, 50);```
 
 Expectation:
 
-The file upload does not occur.
-
-Message appears: "Insufficient storage space to upload file: HugeFile"
-
-The slot is correctly freed for other threads, if present.
+- The file upload does not occur.
+- Message appears: "Insufficient storage space to upload file: HugeFile"
+ -The slot is correctly freed for other threads, if present.
