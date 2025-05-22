@@ -41,3 +41,46 @@ The project was developed in C++ using the following standard libraries:
 The main structure revolves around a class called File, which represents a file to be uploaded. Each File object contains its attributes (name, size, upload speed, etc.) and an operator() function that executes when the object is called from a thread. The function performs semaphore wait logic, memory verification, upload simulation with a progress bar, and resource release upon completion.
 
 A key snippet of semaphore synchronization is as follows:
+```
+unique_lock<mutex> lock(mtxSlots);
+cv.wait(lock, [](){ return slots > 0; });
+slots--;
+lock.unlock();
+
+```
+And at the end of the thread:
+```
+lock_guard<mutex> lock(mtxSlots);
+slots++;
+cv.notify_one();
+
+```
+This mechanism represents a semaphore-based concurrency control, ensuring that only a limited number of threads can upload files at the same time. The use of additional mutexes protects resources such as available memory and prevents race conditions.
+Several tests were performed to verify the program's concurrent behavior and validate the correct use of semaphores, memory, and synchronization between threads.
+
+Test 1: Uploading 5 files with different sizes and speeds
+```
+ thread t1(File("Word Document", 100, 0, 10));
+    thread t2(File("Big Photo", 300, 0, 30));
+    thread t3(File("Game", 500, 0, 50));
+    thread t4(File("Video", 600, 0, 200));
+    thread t5(File("Homework", 100, 0, 20));
+```
+Expected results:
+
+- Only two files are uploaded at a time (via slots).
+
+- The progress bar advances correctly in each thread.
+
+- If there is not enough memory, the program displays the message:
+"Insufficient storage space to upload file: Video."
+
+- At the end, the remaining memory and details of each uploaded file are displayed.
+
+Observations:
+
+- Concurrency is clearly reflected in the interleaved output of the uploaded files.
+
+- There were no console conflicts thanks to the use of mutexes.
+
+- Memory was managed correctly, and files were uploaded until it ran out.
