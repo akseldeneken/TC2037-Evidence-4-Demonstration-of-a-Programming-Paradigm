@@ -1,4 +1,4 @@
-# TC2037-Evidence-4-Demonstration-of-a-Programming-Paradigm
+![image](https://github.com/user-attachments/assets/9e67d195-f8d0-4c7f-9338-e4f4da79d927)# TC2037-Evidence-4-Demonstration-of-a-Programming-Paradigm
 ## Description
 In this evidence, I developed a script that simulates a concurrent file upload system, similar to the operation of platforms like Google Drive or Dropbox, where users can upload multiple files at the same time. This problem is relevant because in real systems, processing tasks one by one wastes time and resources. Allowing simultaneous uploads improves system efficiency and the user experience.
 
@@ -134,3 +134,9 @@ Concurrent programming was ideal for this project because:
 - The number of active tasks can be controlled with semaphores (slots).
 - It allows you to take advantage of CPU time without blocking the rest of the system.
 - It reflects the realistic logic of file upload servers and apps.
+
+## References
+GeeksforGeeks. (2023, November 20). Mutex in C++. GeeksforGeeks. https://www.geeksforgeeks.org/std-mutex-in-cpp/
+GeeksforGeeks. (2025, May 15). Multithreading in C++. GeeksforGeeks. https://www.geeksforgeeks.org/multithreading-in-cpp/
+GeeksforGeeks. (2024, October 21). Mutex vs Semaphore. GeeksforGeeks. https://www.geeksforgeeks.org/mutex-vs-semaphore/
+GeeksforGeeks. (2025, January 7). Semaphores in process synchronization. GeeksforGeeks. https://www.geeksforgeeks.org/semaphores-in-process-synchronization/
