@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/9e67d195-f8d0-4c7f-9338-e4f4da79d927)# TC2037-Evidence-4-Demonstration-of-a-Programming-Paradigm
 ## Description
 In this evidence, I developed a script that simulates a concurrent file upload system, similar to the operation of platforms like Google Drive or Dropbox, where users can upload multiple files at the same time. This problem is relevant because in real systems, processing tasks one by one wastes time and resources. Allowing simultaneous uploads improves system efficiency and the user experience.
 
